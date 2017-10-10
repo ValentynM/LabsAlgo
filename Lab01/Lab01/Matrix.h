@@ -8,83 +8,71 @@
 using namespace std;
 
 void GetID(int id);
-void ForMatrix(char ch, int i, int j);
+void InputSize(int & n);
+void InputMatrixElement(double & element, int i, int j);
+void OutputMatrixElement(double element, int i, int j);
+void InputCharacter(char & ch);
+void Memory(int memory1, int memory2);
 
-int Size()
-{
-	int n;
-	GetID(12);
-	cin >> n;
-	return n;
-}
-
-void InputMatrix(vector < vector <double> > & vct, int n)
+void InputMainMatrix(vector < vector <double> > & vct, int n)
 {
 	for (int i = 0; i < n; i++)
 		for (int j = 0; j < n; j++)
 			if (j > i)
-			{
-				ForMatrix('a', i, j);
-				cin >> vct[i][j];
-			}
+				 InputMatrixElement(vct[i][j], i, j);
 			else
 			{
-				ForMatrix('a', i, j);
 				vct[i][j] = 0;
-				cout << vct[i][j];
-				cout << endl;
+				OutputMatrixElement(vct[i][j], i, j);
 			}
-
 }
 
-void MyMatrix(vector < vector <double> > vct, int n)
+void InputAdditionalMatrix(vector < vector <double> > & tmp, int n)
 {
 	for (int i = 0; i < n; i++)
 		for (int j = 0; j < n; j++)
-		{
-			ForMatrix('a', i, j);
-			cout << vct[i][j] << endl;
-		}
+			InputMatrixElement(tmp[i][j], i, j);
+}
+
+void OutputMatrix(vector < vector <double> > vct, int n)
+{
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < n; j++)
+			OutputMatrixElement(vct[i][j], i, j);
 }
 
 void AdditionMatrix(vector < vector <double> > & vct, int n)
 {
 	vector < vector <double> > tmp(n, vector<double>(n));
 	GetID(15);
+	InputAdditionalMatrix(tmp, n);
 	for (int i = 0; i < n; i++)
 		for (int j = 0; j < n; j++)
-		{
-			ForMatrix('b', i, j);
-			cin >> tmp[i][j];
 			vct[i][j] += tmp[i][j];
-		}
 }
 
 void SubtractionMatrix(vector < vector <double> > & vct, int n)
 {
 	vector < vector <double> > tmp(n, vector<double>(n));
 	GetID(15);
+	InputAdditionalMatrix(tmp, n);
 	for (int i = 0; i < n; i++)
 		for (int j = 0; j < n; j++)
-		{
-			ForMatrix('b', i, j);
-			cin >> tmp[i][j];
 			vct[i][j] -= tmp[i][j];
-		}
 }
 
 void MultiplicationMatrix(vector < vector <double> > & vct, int n)
 {
 	vector < vector <double> > tmp1(n, vector<double>(n)), tmp2(n, vector<double>(n));
 	GetID(15);
+	InputAdditionalMatrix(tmp2, n);
 	for (int i = 0; i < n; i++)
 		for (int j = 0; j < n; j++)
 		{
-			ForMatrix('b', i, j);
-			cin >> tmp2[i][j];
 			tmp1[i][j] = vct[i][j];
 			vct[i][j] = 0;
 		}
+
 	for (int i = 0; i < n; i++)
 		for (int j = 0; j < n; j++)
 			for (int k = 0; k < n; k++)
@@ -96,11 +84,11 @@ void DivisionMatrix(vector < vector <double> > & vct, int n)
 	vector < vector <double> > tmp1(n, vector<double>(n)), tmp2(n, vector<double>(n)), E(n, vector<double>(n));
 	double dtmp;
 	GetID(15);
+	InputAdditionalMatrix(tmp2, n);
+
 	for (int i = 0; i < n; i++)
 		for (int j = 0; j < n; j++)
 		{
-			ForMatrix('b', i, j);
-			cin >> tmp2[i][j];
 			tmp1[i][j] = vct[i][j];
 			vct[i][j] = 0;
 			if (i == j)
@@ -175,6 +163,10 @@ void SaveMatrix(vector < vector <double> > vct, int n)
 				myfile << j;
 				myfile << "\n";
 			}
+
+	GetID(19);
+	Memory(sizeof(vct) * pow(n, 2), myfile.tellp());
+
 	myfile.close();
 }
 
@@ -187,11 +179,19 @@ bool LoadMatrix(vector < vector <double> > & vct, int & n)
 	double dElement;
 	int k;
 
+	
 	try
 	{
 		if (myfile.is_open())
 		{
 			getline(myfile, element, '\n');
+
+			if (element.empty())
+			{
+				GetID(21);
+				return false;
+			}
+
 			k = stoi(element);
 
 			if (k != n)
@@ -199,6 +199,7 @@ bool LoadMatrix(vector < vector <double> > & vct, int & n)
 				vct.resize(k);
 				for (int i = 0; i < k; ++i)
 					vct[i].resize(k);
+				
 				if (k > n)
 					for (int i = 0; i < n; i++)
 						for (int j = 0; j < n; j++)
@@ -220,7 +221,13 @@ bool LoadMatrix(vector < vector <double> > & vct, int & n)
 				vct[iRaw][iCol] = dElement;
 			}
 
+			GetID(20);
 			myfile.close();
+		}
+		else
+		{
+			GetID(22);
+			return false;
 		}
 	}
 	catch (invalid_argument)
@@ -239,18 +246,19 @@ bool LoadMatrix(vector < vector <double> > & vct, int & n)
 
 void MatrixMain()
 {
-	int n = Size();
+	int n;
+	GetID(12);
+	InputSize(n);
 	vector < vector <double> > vct(n, vector<double>(n));
-	char ch;
-
+	char ch = '1';
 	GetID(13);
-	InputMatrix(vct, n);
+	InputMainMatrix(vct, n);
 
 	do
 	{
 		GetID(14);
-		cin >> ch;
-		cin.ignore();
+		InputCharacter(ch);
+
 		switch (ch)
 		{
 		case '1':
@@ -273,7 +281,7 @@ void MatrixMain()
 				return;
 			break;
 		case '7':
-			MyMatrix(vct, n);
+			OutputMatrix(vct, n);
 			break;
 		}
 	} while (ch >= 49 && ch <= 55);

@@ -1,5 +1,7 @@
 #pragma once
 #include <iostream>
+#include <string>
+#include <vector>
 
 using namespace std;
 
@@ -41,18 +43,19 @@ void GetID(int id)
 		cout << "Дужки пустi!\n\n";
 		break;
 	case 12:
-		cout << "Введiть кiлькiсть рядкiв та стовпцiв: ";
+		cout << "\nВведiть розмiр матрицi: ";
 		break;
 	case 13:
 		cout << "Введiть елементи матрицi:\n";
 		break;
 	case 14:
-		cout << "\n\nВведiть '1' для додавання матриць,\n'2' для вiднiмання матриць,\n'3' для множення матриць,";
-		cout << "\n'4' для дiлення матриць,\n'5' для зберiгання матрицi\n'6' для зчитування матрицi,\n'7' для виводу матрицi";
-		cout << "\n'0' для виходу\n";
+		cout << "\n\nВведiть '1' для додавання матриць";
+		cout << "\n'2' для вiднiмання матриць\n'3' для множення матриць";
+		cout << "\n'4' для дiлення матриць\n'5' для зберiгання матрицi\n'6' для зчитування матрицi";
+		cout << "\n'7' для виводу матрицi\n'0' для виходу\n";
 		break;
 	case 15:
-		cout << "Введiть елементи другої матрицi:\n";
+		cout << "\nВведiть елементи другої матрицi:\n";
 		break;
 	case 16:
 		cout << "Файл не може бути вiдкритим або створеним\n";
@@ -63,12 +66,59 @@ void GetID(int id)
 	case 18:
 		cout << "Вихiд за границю дiапазона типу даних!\n\n";
 		break;
+	case 19:
+		cout << "\nФайл збережено!\n";
+		break;
+	case 20:
+		cout << "\nФайл зчитано!\n";
+		break;
+	case 21:
+		cout << "\nЗчитування неможливе, оскiльки файл пустий!\n\n";
+		break;
+	case 22:
+		cout << "\nПомилка вiдкривання файла!\n\n";
+		break;
 	default:
 		break;
 	}
 }
 
-void ForMatrix(char ch, int i, int j)
+void InputString(string & str)
 {
-	cout << ch << "[" << i << ", " << j << "] = ";
+	getline(cin, str);
+}
+
+void GetResult(double result)
+{
+	cout << result << endl << endl;
+}
+
+void InputSize(int & n)
+{
+	cin >> n;
+}
+
+void InputMatrixElement (double & element,int i, int j)
+{
+	cout << "Element [" << i << ", " << j << "] = ";
+	cin >> element;
+
+}
+
+void OutputMatrixElement(double element, int i, int j)
+{
+		cout << "Element [" << i << ", " << j << "] = ";
+		cout << element << endl;
+}
+
+void InputCharacter(char & ch)
+{
+	cin >> ch;
+	cin.ignore();
+}
+
+void Memory(int memory1, int memory2)
+{
+	cout << "Пам'ять, яку займає вектор - " << memory1 << " байт(а)." << endl;
+	cout << "Пам'ять, яку займає файл - " << memory2 << " байт(а)." << endl;
 }

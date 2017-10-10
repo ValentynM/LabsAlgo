@@ -9,6 +9,7 @@ using namespace std;
 void CalculatorMain();
 void MatrixMain();
 void GetID(int id);
+void InputCharacter(char & ch);
 
 int main()
 {
@@ -18,8 +19,7 @@ int main()
 	do
 	{
 		GetID(1);
-		cin >> ch;
-		cin.ignore();
+		InputCharacter(ch);
 
 		switch (ch)
 		{

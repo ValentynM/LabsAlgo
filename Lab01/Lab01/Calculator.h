@@ -7,6 +7,8 @@
 using namespace std;
 
 void GetID(int id);
+void InputString(string & str);
+void GetResult(double result);
 
 bool Isprimenumber(int num)
 {
@@ -187,7 +189,7 @@ void CalculatorMain()
 	unsigned int sizestr, sizestk2;
 
 	GetID(2);
-	getline(cin, str);
+	InputString(str);
 	sizestr = str.size();
 
 	if (!CheckStr(str, sizestr))
@@ -261,5 +263,5 @@ void CalculatorMain()
 		Calculation(stk1, stk2);
 
 	GetID(8);
-	cout << stk1.top() << endl << endl;
+	GetResult(stk1.top());
 }
