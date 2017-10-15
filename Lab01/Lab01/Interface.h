@@ -5,12 +5,13 @@
 
 using namespace std;
 
-void GetID(int id)
+void getID(int id)
 {
 	switch (id)
 	{
 	case 1:
-		cout << "¬ведiть '1' дл€ роботи з калькул€тором,\n'2' дл€ роботи з матриц€ми,\n'0' дл€ завершенн€ програми.\n";
+		cout << "¬ведiть '1' дл€ роботи з калькул€тором,\n'2' дл€ роботи з матриц€ми,";
+		cout << "\n'0' дл€ завершенн€ програми.\n";
 		break;
 	case 2:
 		cout << "¬ведiть вираз: ";
@@ -83,42 +84,47 @@ void GetID(int id)
 	}
 }
 
-void InputString(string & str)
+void inputString(string& str)
 {
 	getline(cin, str);
 }
 
-void GetResult(double result)
+void getResult(double result)
 {
 	cout << result << endl << endl;
 }
 
-void InputSize(int & n)
+void inputSize(int& size)
 {
-	cin >> n;
+	cin >> size;
 }
 
-void InputMatrixElement (double & element,int i, int j)
+void inputElement (double& element,int line, int column)
 {
-	cout << "Element [" << i << ", " << j << "] = ";
+	cout << "Element [" << line << ", " << column << "] = ";
 	cin >> element;
 
 }
 
-void OutputMatrixElement(double element, int i, int j)
+void outputElement(double element, int line, int column)
 {
-		cout << "Element [" << i << ", " << j << "] = ";
+		cout << "Element [" << line << ", " << column << "] = ";
 		cout << element << endl;
 }
 
-void InputCharacter(char & ch)
+void inputCharacter(char& character)
 {
-	cin >> ch;
+	cin >> character;
 	cin.ignore();
 }
 
-void Memory(int memory1, int memory2)
+void memory(int memory1, int memory2)
 {
 	cout << "ѕам'€ть, €ку займаЇ вектор - " << memory1 << " байт(а)." << endl;
 	cout << "ѕам'€ть, €ку займаЇ файл - " << memory2 << " байт(а)." << endl;
+}
+
+void executionTime(unsigned int time)
+{
+	cout << "„ас виконанн€ функцiњ: " << time << " мс" << endl;
 }

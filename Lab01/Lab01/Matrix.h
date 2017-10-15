@@ -3,91 +3,94 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <ctime>
+
 #include "Interface.h"
 
 using namespace std;
 
-void GetID(int id);
-void InputSize(int & n);
-void InputMatrixElement(double & element, int i, int j);
-void OutputMatrixElement(double element, int i, int j);
-void InputCharacter(char & ch);
-void Memory(int memory1, int memory2);
+void getID(int id);
+void inputSize(int& size);
+void inputElement(double& element, int line, int column);
+void outputElement(double element, int line, int column);
+void inputCharacter(char& character);
+void memory(int memory1, int memory2);
+void executionTime(unsigned int time);
 
-void InputMainMatrix(vector < vector <double> > & vct, int n)
+void inputMainMatrix(vector < vector <double> >& vct, int sizeMatrix)
 {
-	for (int i = 0; i < n; i++)
-		for (int j = 0; j < n; j++)
+	for (int i = 0; i < sizeMatrix; i++)
+		for (int j = 0; j < sizeMatrix; j++)
 			if (j > i)
-				 InputMatrixElement(vct[i][j], i, j);
+				 inputElement(vct[i][j], i, j);
 			else
 			{
 				vct[i][j] = 0;
-				OutputMatrixElement(vct[i][j], i, j);
+				outputElement(vct[i][j], i, j);
 			}
 }
 
-void InputAdditionalMatrix(vector < vector <double> > & tmp, int n)
+void inputAdditionalMatrix(vector < vector <double> >& tmp, int sizeMatrix)
 {
-	for (int i = 0; i < n; i++)
-		for (int j = 0; j < n; j++)
-			InputMatrixElement(tmp[i][j], i, j);
+	for (int i = 0; i < sizeMatrix; i++)
+		for (int j = 0; j < sizeMatrix; j++)
+			inputElement(tmp[i][j], i, j);
 }
 
-void OutputMatrix(vector < vector <double> > vct, int n)
+void outputMatrix(vector < vector <double> > vct, int sizeMatrix)
 {
-	for (int i = 0; i < n; i++)
-		for (int j = 0; j < n; j++)
-			OutputMatrixElement(vct[i][j], i, j);
+	for (int i = 0; i < sizeMatrix; i++)
+		for (int j = 0; j < sizeMatrix; j++)
+			outputElement(vct[i][j], i, j);
 }
 
-void AdditionMatrix(vector < vector <double> > & vct, int n)
+void additionMatrix(vector < vector <double> >& vct, int sizeMatrix)
 {
-	vector < vector <double> > tmp(n, vector<double>(n));
-	GetID(15);
-	InputAdditionalMatrix(tmp, n);
-	for (int i = 0; i < n; i++)
-		for (int j = 0; j < n; j++)
+	vector < vector <double> > tmp(sizeMatrix, vector<double>(sizeMatrix));
+	getID(15);
+	inputAdditionalMatrix(tmp, sizeMatrix);
+	for (int i = 0; i < sizeMatrix; i++)
+		for (int j = 0; j < sizeMatrix; j++)
 			vct[i][j] += tmp[i][j];
 }
 
-void SubtractionMatrix(vector < vector <double> > & vct, int n)
+void subtractionMatrix(vector < vector <double> >& vct, int sizeMatrix)
 {
-	vector < vector <double> > tmp(n, vector<double>(n));
-	GetID(15);
-	InputAdditionalMatrix(tmp, n);
-	for (int i = 0; i < n; i++)
-		for (int j = 0; j < n; j++)
+	vector < vector <double> > tmp(sizeMatrix, vector<double>(sizeMatrix));
+	getID(15);
+	inputAdditionalMatrix(tmp, sizeMatrix);
+	for (int i = 0; i < sizeMatrix; i++)
+		for (int j = 0; j < sizeMatrix; j++)
 			vct[i][j] -= tmp[i][j];
 }
 
-void MultiplicationMatrix(vector < vector <double> > & vct, int n)
+void multiplicationMatrix(vector < vector <double> >& vct, int sizeMatrix)
 {
-	vector < vector <double> > tmp1(n, vector<double>(n)), tmp2(n, vector<double>(n));
-	GetID(15);
-	InputAdditionalMatrix(tmp2, n);
-	for (int i = 0; i < n; i++)
-		for (int j = 0; j < n; j++)
+	vector < vector <double> > tmp1(sizeMatrix, vector<double>(sizeMatrix)), tmp2(sizeMatrix, vector<double>(sizeMatrix));
+	getID(15);
+	inputAdditionalMatrix(tmp2, sizeMatrix);
+	for (int i = 0; i < sizeMatrix; i++)
+		for (int j = 0; j < sizeMatrix; j++)
 		{
 			tmp1[i][j] = vct[i][j];
 			vct[i][j] = 0;
 		}
 
-	for (int i = 0; i < n; i++)
-		for (int j = 0; j < n; j++)
-			for (int k = 0; k < n; k++)
+	for (int i = 0; i < sizeMatrix; i++)
+		for (int j = 0; j < sizeMatrix; j++)
+			for (int k = 0; k < sizeMatrix; k++)
 				vct[i][j] += tmp1[i][k] * tmp2[k][j];
 }
 
-void DivisionMatrix(vector < vector <double> > & vct, int n)
+void divisionMatrix(vector < vector <double> >& vct, int sizeMatrix)
 {
-	vector < vector <double> > tmp1(n, vector<double>(n)), tmp2(n, vector<double>(n)), E(n, vector<double>(n));
+	vector < vector <double> > tmp1(sizeMatrix, vector<double>(sizeMatrix)), tmp2(sizeMatrix, vector<double>(sizeMatrix)), E(sizeMatrix, vector<double>(sizeMatrix));
 	double dtmp;
-	GetID(15);
-	InputAdditionalMatrix(tmp2, n);
+	getID(15);
+	inputAdditionalMatrix(tmp2, sizeMatrix);
 
-	for (int i = 0; i < n; i++)
-		for (int j = 0; j < n; j++)
+	for (int i = 0; i < sizeMatrix; i++)
+		for (int j = 0; j < sizeMatrix; j++)
 		{
 			tmp1[i][j] = vct[i][j];
 			vct[i][j] = 0;
@@ -97,21 +100,21 @@ void DivisionMatrix(vector < vector <double> > & vct, int n)
 				E[i][j] = 0;
 		}
 
-	for (int i = 0; i < n; i++)
+	for (int i = 0; i < sizeMatrix; i++)
 	{
 		dtmp = tmp2[i][i];
 
-		for (int j = 0; j < n; j++)
+		for (int j = 0; j < sizeMatrix; j++)
 		{
 			tmp2[i][j] /= dtmp;
 			E[i][j] /= dtmp;
 		}
 
-		for (int k = i + 1; k < n; k++)
+		for (int k = i + 1; k < sizeMatrix; k++)
 		{
 			dtmp = tmp2[k][i];
 
-			for (int j = 0; j < n; j++)
+			for (int j = 0; j < sizeMatrix; j++)
 			{
 				tmp2[k][j] -= tmp2[i][j] * dtmp;
 				E[k][j] -= E[i][j] * dtmp;
@@ -119,13 +122,13 @@ void DivisionMatrix(vector < vector <double> > & vct, int n)
 		}
 	}
 
-	for (int i = n - 1; i > 0; i--)
+	for (int i = sizeMatrix - 1; i > 0; i--)
 	{
 		for (int k = i - 1; k >= 0; k--)
 		{
 			dtmp = tmp2[k][i];
 
-			for (int j = 0; j < n; j++)
+			for (int j = 0; j < sizeMatrix; j++)
 			{
 				tmp2[k][j] -= tmp2[i][j] * dtmp;
 				E[k][j] -= E[i][j] * dtmp;
@@ -133,27 +136,28 @@ void DivisionMatrix(vector < vector <double> > & vct, int n)
 		}
 	}
 
-	for (int i = 0; i < n; i++)
-		for (int j = 0; j < n; j++)
-			for (int k = 0; k < n; k++)
+	for (int i = 0; i < sizeMatrix; i++)
+		for (int j = 0; j < sizeMatrix; j++)
+			for (int k = 0; k < sizeMatrix; k++)
 				vct[i][j] += tmp1[i][k] * tmp2[k][j];
 }
 
-void SaveMatrix(vector < vector <double> > vct, int n)
+void saveMatrix(vector < vector <double> > vct, int sizeMatrix)
 {
+	unsigned int start = clock(), finish;
 	ofstream myfile;
 	myfile.open("MyFile.csv", ios_base::out | ios_base::trunc);
 	if (!myfile.is_open())
 	{
-		GetID(16);
+		getID(16);
 		return;
 	}
 
-	myfile << n;
+	myfile << sizeMatrix;
 	myfile << "\n";
 
-	for (int i = 0; i < n; i++)
-		for (int j = 0; j < n; j++)
+	for (int i = 0; i < sizeMatrix; i++)
+		for (int j = 0; j < sizeMatrix; j++)
 			if (vct[i][j] != 0)
 			{
 				myfile << vct[i][j];
@@ -164,14 +168,17 @@ void SaveMatrix(vector < vector <double> > vct, int n)
 				myfile << "\n";
 			}
 
-	GetID(19);
-	Memory(sizeof(vct) * pow(n, 2), myfile.tellp());
-
+	getID(19);
+	memory(sizeof(vector<double>) * pow(sizeMatrix, 2), myfile.tellp());
 	myfile.close();
+
+	finish = clock();
+	executionTime(finish - start);
 }
 
-bool LoadMatrix(vector < vector <double> > & vct, int & n)
+bool loadMatrix(vector < vector <double> >& vct, int & sizeMatrix)
 {
+	unsigned int start = clock(), finish;
 	ifstream myfile;
 	myfile.open("MyFile.csv");
 	string element, raw, column;
@@ -188,26 +195,26 @@ bool LoadMatrix(vector < vector <double> > & vct, int & n)
 
 			if (element.empty())
 			{
-				GetID(21);
+				getID(21);
 				return false;
 			}
 
 			k = stoi(element);
 
-			if (k != n)
+			if (k != sizeMatrix)
 			{
 				vct.resize(k);
 				for (int i = 0; i < k; ++i)
 					vct[i].resize(k);
 				
-				if (k > n)
-					for (int i = 0; i < n; i++)
-						for (int j = 0; j < n; j++)
+				if (k > sizeMatrix)
+					for (int i = 0; i < sizeMatrix; i++)
+						for (int j = 0; j < sizeMatrix; j++)
 						{
 							if (vct[i][j] == NULL)
 								vct[i][j] = 0;
 						}
-				n = k;
+				sizeMatrix = k;
 			}
 
 			while (getline(myfile, element, ';'))
@@ -221,67 +228,70 @@ bool LoadMatrix(vector < vector <double> > & vct, int & n)
 				vct[iRaw][iCol] = dElement;
 			}
 
-			GetID(20);
+			getID(20);
 			myfile.close();
 		}
 		else
 		{
-			GetID(22);
+			getID(22);
 			return false;
 		}
 	}
 	catch (invalid_argument)
 	{
-		GetID(17);
+		getID(17);
 		return false;
 	}
 	catch (out_of_range)
 	{
-		GetID(18);
+		getID(18);
 		return false;
 	}
+
+	finish = clock();
+	executionTime(finish - start);
 
 	return true;
 }
 
-void MatrixMain()
+void matrixMain()
 {
-	int n;
-	GetID(12);
-	InputSize(n);
-	vector < vector <double> > vct(n, vector<double>(n));
+	int sizeMatrix;
+	getID(12);
+	inputSize(sizeMatrix);
+	vector < vector <double> > vct(sizeMatrix, vector<double>(sizeMatrix));
 	char ch = '1';
-	GetID(13);
-	InputMainMatrix(vct, n);
+	getID(13);
+	inputMainMatrix(vct, sizeMatrix);
 
 	do
 	{
-		GetID(14);
-		InputCharacter(ch);
+		getID(14);
+		inputCharacter(ch);
 
 		switch (ch)
 		{
 		case '1':
-			AdditionMatrix(vct, n);
+			additionMatrix(vct, sizeMatrix);
 			break;
 		case '2':
-			SubtractionMatrix(vct, n);
+			subtractionMatrix(vct, sizeMatrix);
 			break;
 		case '3':
-			MultiplicationMatrix(vct, n);
+			multiplicationMatrix(vct, sizeMatrix);
 			break;
 		case '4':
-			DivisionMatrix(vct, n);
+			divisionMatrix(vct, sizeMatrix);
 			break;
 		case '5':
-			SaveMatrix(vct, n);
+			saveMatrix(vct, sizeMatrix);
 			break;
 		case '6':
-			if (!LoadMatrix(vct, n))
+			if (!loadMatrix(vct, sizeMatrix))
 				return;
 			break;
 		case '7':
-			OutputMatrix(vct, n);
+			outputMatrix(vct, sizeMatrix);
 			break;
 		}
 	} while (ch >= 49 && ch <= 55);

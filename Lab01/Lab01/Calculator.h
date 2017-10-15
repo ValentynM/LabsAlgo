@@ -2,33 +2,34 @@
 #include <iostream>
 #include <string>
 #include <stack>
+
 #include "Interface.h"
 
 using namespace std;
 
-void GetID(int id);
-void InputString(string & str);
-void GetResult(double result);
+void getID(int id);
+void inputString(string& str);
+void getResult(double result);
 
-bool Isprimenumber(int num)
+bool isPrimeNumber(int number)
 {
-	if (num < 2)
+	if (number < 2)
 	{
-		GetID(7);
+		getID(7);
 		return false;
 	}
-	for (int i = 2; pow(i, 2) <= num; i++)
-		if (num % i == 0)
+	for (int i = 2; pow(i, 2) <= number; i++)
+		if (number % i == 0)
 		{
-			GetID(7);
+			getID(7);
 			return false;
 		}
 	return true;
 }
 
-int Priority(char a)
+int priority(char operation)
 {
-	switch (a)
+	switch (operation)
 	{
 	case '+':
 	case '-': return 1;
@@ -39,7 +40,7 @@ int Priority(char a)
 	}
 }
 
-void Calculation(stack <double> & stk1, stack <char> & stk2)
+void calculation(stack <double>& stk1, stack <char>& stk2)
 {
 	double num2 = stk1.top();
 	stk1.pop();
@@ -68,15 +69,15 @@ void Calculation(stack <double> & stk1, stack <char> & stk2)
 	stk2.pop();
 }
 
-bool CheckStr(string str, int sizestr)
+bool checkStr(string str, int sizestr)
 {
-	int openbrackets = 0, closedbrackets = 0;
+	int openBrackets = 0, closedBrackets = 0;
 	int operands = -1, operators = 0;
 	bool p = true;
 
 	if (str.at(sizestr - 1) != '=')
 	{
-		GetID(3);
+		getID(3);
 		return false;
 	}
 
@@ -111,30 +112,30 @@ bool CheckStr(string str, int sizestr)
 			p = true;
 			if (i == 0 || i == sizestr - 2)
 			{
-				GetID(9);
+				getID(9);
 				return false;
 			}
 			break;
 		case '(':
-			openbrackets++;
+			openBrackets++;
 			break;
 		case ')':
-			closedbrackets++;
+			closedBrackets++;
 			if (str.at(i - 1) == '(')
 			{
-				GetID(11);
+				getID(11);
 				return false;
 			}
 			break;
 		case '=':
 			if (i != sizestr - 1)
 			{
-				GetID(10);
+				getID(10);
 				return false;
 			}
 			break;
 		default:
-			GetID(5);
+			getID(5);
 			return false;
 			break;
 		}
@@ -143,59 +144,59 @@ bool CheckStr(string str, int sizestr)
 
 	if (operands != operators)
 	{
-		GetID(4);
+		getID(4);
 		return false;
 	}
 
-	if (openbrackets != closedbrackets)
+	if (openBrackets != closedBrackets)
 	{
-		GetID(6);
+		getID(6);
 		return false;
 	}
 
 	return true;
 }
 
-bool PushNumberToStack(stack <double> & stk1, string & tmp)
+bool pushNumberToStack(stack <double>& stk1, string& tmp)
 {
 	try
 	{
 		stk1.push(stod(tmp));
-		if (!Isprimenumber(stoi(tmp)))
+		if (!isPrimeNumber(stoi(tmp)))
 			return false;
 		tmp = "\0";
 	}
 	catch (invalid_argument)
 	{
-		GetID(17);
+		getID(17);
 		return false;
 	}
 	catch (out_of_range)
 	{
-		GetID(18);
+		getID(18);
 		return false;
 	}
 
 	return true;
 }
 
-void CalculatorMain()
+void calculatorMain()
 {
 	string str;
 	stack <double> stk1;
 	stack <char> stk2;
 	string tmp = "\0";
-	int dynamicbrackets = 0;
-	unsigned int sizestr, sizestk2;
+	int dynamicBrackets = 0;
+	unsigned int sizeStr, sizeStk2;
 
-	GetID(2);
-	InputString(str);
-	sizestr = str.size();
+	getID(2);
+	inputString(str);
+	sizeStr = str.size();
 
-	if (!CheckStr(str, sizestr))
+	if (!checkStr(str, sizeStr))
 		return;
 
-	for (unsigned int i = 0; i < sizestr; i++)
+	for (unsigned int i = 0; i < sizeStr; i++)
 	{
 		switch (str.at(i))
 		{
@@ -216,42 +217,42 @@ void CalculatorMain()
 		case '*':
 		case '/':
 		case '^':
-			sizestk2 = stk2.size();
+			sizeStk2 = stk2.size();
 			if (!tmp.empty())
-				if (!PushNumberToStack(stk1, tmp))
+				if (!pushNumberToStack(stk1, tmp))
 					return;
 
-			if (stk2.size() - dynamicbrackets == 0)
+			if (stk2.size() - dynamicBrackets == 0)
 				stk2.push(str.at(i));
 
 			else
 			{
-				for (unsigned int j = sizestk2; j > 0; j--)
+				for (unsigned int j = sizeStk2; j > 0; j--)
 				{
 					if (stk2.top() == '(') break;
-					if (Priority(stk2.top()) >= Priority(str.at(i)))
-						Calculation(stk1, stk2);
+					if (priority(stk2.top()) >= priority(str.at(i)))
+						calculation(stk1, stk2);
 				}
 				stk2.push(str.at(i));
 			}
 			break;
 		case '(':
-			dynamicbrackets++;
+			dynamicBrackets++;
 			stk2.push(str.at(i));
 			break;
 		case ')':
 			if (!tmp.empty())
-				if (!PushNumberToStack(stk1, tmp))
+				if (!pushNumberToStack(stk1, tmp))
 					return;
 
 			while (stk2.top() != '(')
-				Calculation(stk1, stk2);
+				calculation(stk1, stk2);
 			stk2.pop();
-			dynamicbrackets--;
+			dynamicBrackets--;
 			break;
 		case '=':
 			if (!tmp.empty())
-				if (!PushNumberToStack(stk1, tmp))
+				if (!pushNumberToStack(stk1, tmp))
 					return;
 			break;
 		default:
@@ -260,8 +261,8 @@ void CalculatorMain()
 	}
 
 	while (stk1.size() != 1 && !stk2.empty())
-		Calculation(stk1, stk2);
+		calculation(stk1, stk2);
 
-	GetID(8);
-	GetResult(stk1.top());
+	getID(8);
+	getResult(stk1.top());
 }

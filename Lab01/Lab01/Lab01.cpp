@@ -1,39 +1,40 @@
-#include "stdafx.h"
 #include <iostream>
+
+#include "stdafx.h"
 #include "Calculator.h"
 #include "Matrix.h"
 #include "Interface.h"
 
 using namespace std;
 
-void CalculatorMain();
-void MatrixMain();
-void GetID(int id);
-void InputCharacter(char & ch);
+void calculatorMain();
+void matrixMain();
+void getID(int id);
+void inputCharacter(char& ch);
 
 int main()
 {
 	setlocale(LC_ALL, "ukr");
-	char ch;
+	char character;
 
 	do
 	{
-		GetID(1);
-		InputCharacter(ch);
+		getID(1);
+		inputCharacter(character);
 
-		switch (ch)
+		switch (character)
 		{
 		case '1':
-			CalculatorMain();
+			calculatorMain();
 			break;
 		case '2':
-			MatrixMain();
+			matrixMain();
 			break;
 		default:
 			break;
 		}
 
-	} while (ch == 49 || ch == 50);
+	} while (character == 49 || character == 50);
 
 	system("pause");
 }
