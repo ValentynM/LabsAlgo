@@ -116,13 +116,35 @@ private:
 				}
 				break;
 			case '(':
+				if (i > 0)
+				{
+					if (isdigit(str.at(i - 1)) || !isdigit(str.at(i + 1)))
+					{
+						myInterface.getID(23);
+						return false;
+					}
+				}
 				openBrackets++;
 				break;
 			case ')':
+
+				if (i == 1)
+				{
+					myInterface.getID(25);
+					return false;
+				}
+
 				closedBrackets++;
+
 				if (str.at(i - 1) == '(')
 				{
 					myInterface.getID(11);
+					return false;
+				}
+
+				if (!isdigit(str.at(i - 1)))
+				{
+					myInterface.getID(24);
 					return false;
 				}
 				break;
