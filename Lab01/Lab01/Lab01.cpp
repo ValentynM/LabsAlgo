@@ -7,28 +7,34 @@
 
 using namespace std;
 
-void calculatorMain();
-void matrixMain();
-void getID(int id);
-void inputCharacter(char& ch);
-
-int main()
+void goToMatrix(Interface myInterface)
 {
+	int sizeMatrix;
+	myInterface.getID(12);
+	myInterface.inputSize(sizeMatrix);
+	Matrix myMatrix(sizeMatrix);
+	myMatrix.matrixMain(myMatrix);
+}
+
+void main()
+{
+	Interface myInterface;
+	Calculator myCalculator;
 	setlocale(LC_ALL, "ukr");
 	char character;
 
 	do
 	{
-		getID(1);
-		inputCharacter(character);
+		myInterface.getID(1);
+		myInterface.inputCharacter(character);
 
 		switch (character)
 		{
 		case '1':
-			calculatorMain();
+			myCalculator.calculatorMain();
 			break;
 		case '2':
-			matrixMain();
+			goToMatrix(myInterface);
 			break;
 		default:
 			break;
