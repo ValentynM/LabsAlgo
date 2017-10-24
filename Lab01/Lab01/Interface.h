@@ -140,4 +140,10 @@ public:
 	{
 		cout << "Час виконання функцiї: " << time << " мс" << endl;
 	}
+
+	static void getPolandForm(string polandForm)
+	{
+		cout << "Польська форма: " << polandForm << endl;
+	}
+
 };

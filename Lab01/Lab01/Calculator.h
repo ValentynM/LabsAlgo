@@ -206,6 +206,7 @@ private:
 	static void calculatorMain()
 	{
 		string str;
+		string polandForm = "\0";
 		stack <double> stk1;
 		stack <char> stk2;
 		string tmp = "\0";
@@ -243,8 +244,12 @@ private:
 			case '^':
 				sizeStk2 = stk2.size();
 				if (!tmp.empty())
+				{
+					polandForm += tmp;
+					polandForm += " ";
 					if (!pushNumberToStack(stk1, tmp, myInterface))
 						return;
+				}
 
 				if (stk2.size() - dynamicBrackets == 0)
 					stk2.push(str.at(i));
@@ -255,7 +260,11 @@ private:
 					{
 						if (stk2.top() == '(') break;
 						if (priority(stk2.top()) >= priority(str.at(i)))
+						{
+							polandForm += stk2.top();
+							polandForm += " ";
 							calculation(stk1, stk2);
+						}
 					}
 					stk2.push(str.at(i));
 				}
@@ -266,18 +275,30 @@ private:
 				break;
 			case ')':
 				if (!tmp.empty())
+				{
+					polandForm += tmp;
+					polandForm += " ";
 					if (!pushNumberToStack(stk1, tmp, myInterface))
 						return;
+				}
 
 				while (stk2.top() != '(')
+				{
+					polandForm += stk2.top();
+					polandForm += " ";
 					calculation(stk1, stk2);
+				}
 				stk2.pop();
 				dynamicBrackets--;
 				break;
 			case '=':
 				if (!tmp.empty())
+				{
+					polandForm += tmp;
+					polandForm += " ";
 					if (!pushNumberToStack(stk1, tmp, myInterface))
 						return;
+				}
 				break;
 			default:
 				break;
@@ -285,7 +306,13 @@ private:
 		}
 
 		while (stk1.size() != 1 && !stk2.empty())
+		{
+			polandForm += stk2.top();
+			polandForm += " ";
 			calculation(stk1, stk2);
+		}
+
+		myInterface.getPolandForm(polandForm);
 
 		myInterface.getID(8);
 		myInterface.getResult(stk1.top());
