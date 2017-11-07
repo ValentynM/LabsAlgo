@@ -5,7 +5,7 @@
 #include <string>
 #include <ctime>
 
-#include "Interface.h"
+#include "UInterface.h"
 
 using namespace std;
 
@@ -15,7 +15,7 @@ private:
 	int size;
 	vector<vector<double> > vct;
 
-	static void inputMainMatrix(Matrix &myMatrix, Interface myInterface)
+	static void inputMainMatrix(Matrix &myMatrix, UInterface myInterface)
 	{
 		for (int i = 0; i < myMatrix.size; i++)
 			for (int j = 0; j < myMatrix.size; j++)
@@ -28,21 +28,21 @@ private:
 				}
 	}
 
-	static void inputAdditionalMatrix(Matrix& myAdditionalMatrix, Interface myInterface)
+	static void inputAdditionalMatrix(Matrix& myAdditionalMatrix, UInterface myInterface)
 	{
 		for (int i = 0; i < myAdditionalMatrix.size; i++)
 			for (int j = 0; j < myAdditionalMatrix.size; j++)
 				myInterface.inputElement(myAdditionalMatrix.vct[i][j], i, j);
 	}
 
-	static void outputMatrix(Matrix myMatrix, Interface myInterface)
+	static void outputMatrix(Matrix myMatrix, UInterface myInterface)
 	{
 		for (int i = 0; i < myMatrix.size; i++)
 			for (int j = 0; j < myMatrix.size; j++)
 				myInterface.outputElement(myMatrix.vct[i][j], i, j);
 	}
 
-	static void additionMatrix(Matrix& myMatrix, Interface myInterface)
+	static void additionMatrix(Matrix& myMatrix, UInterface myInterface)
 	{
 		Matrix tmp(myMatrix.size);
 		myInterface.getID(15);
@@ -52,7 +52,7 @@ private:
 				myMatrix.vct[i][j] += tmp.vct[i][j];
 	}
 
-	static void subtractionMatrix(Matrix& myMatrix, Interface myInterface)
+	static void subtractionMatrix(Matrix& myMatrix, UInterface myInterface)
 	{
 		Matrix tmp(myMatrix.size);
 		myInterface.getID(15);
@@ -62,7 +62,7 @@ private:
 				myMatrix.vct[i][j] -= tmp.vct[i][j];
 	}
 
-	static void multiplicationMatrix(Matrix& myMatrix, Interface myInterface)
+	static void multiplicationMatrix(Matrix& myMatrix, UInterface myInterface)
 	{
 		Matrix tmp1(myMatrix.size), tmp2(myMatrix.size);
 		myInterface.getID(15);
@@ -80,7 +80,7 @@ private:
 					myMatrix.vct[i][j] += tmp1.vct[i][k] * tmp2.vct[k][j];
 	}
 
-	static void divisionMatrix(Matrix& myMatrix, Interface myInterface)
+	static void divisionMatrix(Matrix& myMatrix, UInterface myInterface)
 	{
 		Matrix tmp1(myMatrix.size), tmp2(myMatrix.size), E(myMatrix.size);
 		double dtmp;
@@ -140,7 +140,7 @@ private:
 					myMatrix.vct[i][j] += tmp1.vct[i][k] * tmp2.vct[k][j];
 	}
 
-	static void saveMatrix(Matrix myMatrix, Interface myInterface)
+	static void saveMatrix(Matrix myMatrix, UInterface myInterface)
 	{
 		unsigned int start = clock(), finish;
 		ofstream myfile;
@@ -174,7 +174,7 @@ private:
 		myInterface.executionTime(finish - start);
 	}
 
-	static bool loadMatrix(Matrix& myMatrix, Interface myInterface)
+	static bool loadMatrix(Matrix& myMatrix, UInterface myInterface)
 	{
 		unsigned int start = clock(), finish;
 		ifstream myfile;
@@ -264,7 +264,7 @@ public:
 
 	 static void matrixMain(Matrix myMatrix)
 	{
-		Interface myInterface;
+		UInterface myInterface;
 		char ch = '1';
 		myInterface.getID(13);
 		inputMainMatrix(myMatrix, myInterface);

@@ -2,13 +2,13 @@
 
 #include "stdafx.h"
 #include "MyClass.h"
-#include "Interface.h"
+#include "UInterface.h"
 
 using namespace std;
 
 void main()
 {
-	Interface myInterface;
+	UInterface myInterface;
 	MyClass myObject;
 	char ch = '1';
 

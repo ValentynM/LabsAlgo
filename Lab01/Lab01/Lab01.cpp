@@ -3,11 +3,11 @@
 #include "stdafx.h"
 #include "Calculator.h"
 #include "Matrix.h"
-#include "Interface.h"
+#include "UInterface.h"
 
 using namespace std;
 
-void goToMatrix(Interface myInterface)
+void goToMatrix(UInterface myInterface)
 {
 	int sizeMatrix;
 	myInterface.getID(12);
@@ -18,7 +18,7 @@ void goToMatrix(Interface myInterface)
 
 void main()
 {
-	Interface myInterface;
+	UInterface myInterface;
 	Calculator myCalculator;
 	setlocale(LC_ALL, "ukr");
 	char character;

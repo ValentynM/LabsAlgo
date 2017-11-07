@@ -3,14 +3,14 @@
 #include <string>
 #include <stack>
 
-#include "Interface.h"
+#include "UInterface.h"
 
 using namespace std;
 
 class Calculator
 {
 private:
-	static bool isPrimeNumber(int number, Interface myInterface)
+	static bool isPrimeNumber(int number, UInterface myInterface)
 	{
 		if (number < 2)
 		{
@@ -68,7 +68,7 @@ private:
 		stk2.pop();
 	}
 
-	static bool checkStr(string str, int sizestr, Interface myInterface)
+	static bool checkStr(string str, int sizestr, UInterface myInterface)
 	{
 		int openBrackets = 0, closedBrackets = 0;
 		int operands = -1, operators = 0;
@@ -178,7 +178,7 @@ private:
 		return true;
 	}
 
-	static bool pushNumberToStack(stack <double>& stk1, string& tmp, Interface myInterface)
+	static bool pushNumberToStack(stack <double>& stk1, string& tmp, UInterface myInterface)
 	{
 		try
 		{
@@ -212,7 +212,7 @@ private:
 		string tmp = "\0";
 		int dynamicBrackets = 0;
 		unsigned int sizeStr, sizeStk2;
-		Interface myInterface;
+		UInterface myInterface;
 
 		myInterface.getID(2);
 		myInterface.inputString(str);

@@ -30,7 +30,7 @@
     <ClInclude Include="Matrix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Interface.h">
+    <ClInclude Include="UInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

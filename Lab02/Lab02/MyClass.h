@@ -3,14 +3,14 @@
 #include <string>
 #include <fstream>
 
-#include "Interface.h"
+#include "UInterface.h"
 using namespace std;
 
 class MyClass
 {
 private:
 
-	static void lineGenerator(Interface myInterface)
+	static void lineGenerator(UInterface myInterface)
 	{
 		ofstream myInputFile;
 		myInputFile.open("string.txt", ios_base::out | ios_base::trunc);
@@ -29,12 +29,20 @@ private:
 		myInterface.getID(2);
 	}
 
-	void lineReader(string& s, Interface myInterface)
+	void lineReader(string& s, UInterface myInterface)
 	{
 		ifstream myInputFile;
 		myInputFile.open("string.txt");
 
-		while (getline(myInputFile, s, '\n'));
+		try 
+		{
+			while (getline(myInputFile, s, '\n'));
+		}
+		catch (out_of_range)
+		{
+			myInterface.getID(10);
+			return;
+		}
 
 		myInputFile.close();
 
@@ -43,7 +51,7 @@ private:
 
 	void strAdd(string s, string s1, int n)
 	{
-		Interface myInterface;
+		UInterface myInterface;
 		int iterations = 0;
 
 		if (s1.empty())
@@ -83,7 +91,7 @@ private:
 
 public:
 
-	void mainFunction(Interface myInterface)
+	void mainFunction(UInterface myInterface)
 	{
 		string s, s1;
 		int n;

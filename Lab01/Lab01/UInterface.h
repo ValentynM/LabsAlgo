@@ -5,7 +5,7 @@
 
 using namespace std;
 
-class Interface
+class UInterface
 {
 public:
 	 void getID(int id)

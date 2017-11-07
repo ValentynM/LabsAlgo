@@ -3,7 +3,7 @@
 
 using namespace std;
 
-class Interface
+class UInterface
 {
 public:
 	static void getID (int id)
@@ -36,6 +36,9 @@ public:
 			break;
 		case 9:
 			cout << "\nУспiшне виконання програми!\n";
+			break;
+		case 10:
+			cout << "\nВихiд за межі стрiчки!\n";
 			break;
 		default:
 			break;

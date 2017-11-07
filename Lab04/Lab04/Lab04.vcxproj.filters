@@ -15,16 +15,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass.h">
+    <ClInclude Include="MyDeque.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UInterface.h">
@@ -35,7 +32,7 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Lab02.cpp">
+    <ClCompile Include="Lab04.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
