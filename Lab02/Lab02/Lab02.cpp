@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "stdafx.h"
-#include "MyClass.h"
+#include "Line.h"
 #include "UInterface.h"
 
 using namespace std;
@@ -9,14 +9,14 @@ using namespace std;
 void main()
 {
 	UInterface myInterface;
-	MyClass myObject;
+	Line myObject;
 	char ch = '1';
 
 	setlocale(LC_ALL, "ukr");
 
 	do
 	{
-		myObject.mainFunction(myInterface);
+		myObject.inputData(myInterface);
 
 		myInterface.getID(1);
 		myInterface.inputCharacter(ch);

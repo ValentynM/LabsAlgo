@@ -6,7 +6,7 @@
 #include "UInterface.h"
 using namespace std;
 
-class MyClass
+class Line
 {
 private:
 
@@ -91,7 +91,7 @@ private:
 
 public:
 
-	void mainFunction(UInterface myInterface)
+	void inputData(UInterface myInterface)
 	{
 		string s, s1;
 		int n;
