@@ -3,6 +3,7 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include <algorithm>
 
 #include "UInterface.h"
 #include "Figure.h"
@@ -176,7 +177,6 @@ private:
 		return false;
 	}
 	
-
 public:
 
 	void addObject()
@@ -413,6 +413,49 @@ public:
 		}
 
 		for (int i = 0; i < vct.size() - 2; i++)
+			myNewFile << vct[i] << "\n";
+		myNewFile.close();
+	}
+
+	void fileSort()
+	{
+		vector <string> vct;
+		int count = 0;
+		ifstream myFile;
+		myFile.open("MyFile.csv");
+
+		if (!myFile.is_open())
+		{
+			UInterface::getID(17);
+			return;
+		}
+
+		while (!myFile.eof())
+		{
+			vct.resize(++count);
+			getline(myFile, vct[count - 1], '\n');
+			if (vct[count - 1] == "")
+			{
+				vct.resize(--count);
+			}
+		}
+
+
+		myFile.close();
+		sort(vct.begin(), vct.end());
+
+		remove("MyFile.csv");
+
+		ofstream myNewFile;
+		myNewFile.open("MyFile.csv", ios_base::trunc);
+
+		if (!myNewFile.is_open())
+		{
+			UInterface::getID(17);
+			return;
+		}
+
+		for (int i = 0; i < vct.size(); i++)
 			myNewFile << vct[i] << "\n";
 		myNewFile.close();
 	}

@@ -47,6 +47,7 @@ public:
 			cout << "3 - List All \n";
 			cout << "4 - Edit\n";
 			cout << "5 - Delete\n";
+			cout << "6 - Sort\n";
 			break;
 		case 12:
 			cout << "Enter object you need to search:\n";
