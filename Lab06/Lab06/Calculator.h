@@ -10,21 +10,6 @@ using namespace std;
 class Calculator
 {
 private:
-	/*static bool isPrimeNumber(int number, UInterface myInterface)
-	{
-		if (number < 2)
-		{
-			myInterface.getID(7);
-			return false;
-		}
-		for (int i = 2; pow(i, 2) <= number; i++)
-			if (number % i == 0)
-			{
-				myInterface.getID(7);
-				return false;
-			}
-		return true;
-	}*/
 
 	static int priority(char operation)
 	{
@@ -36,6 +21,73 @@ private:
 		case '/': return 2;
 		case '^': return 3;
 		default: system("pause");
+		}
+	}
+
+	static void calculateMathFuncValue(string& str, int i, int x, UInterface myInterface)
+	{
+		int length = i + 4;
+		double argument = 0.0;
+		string arg = "\0";
+
+		while (str.at(length) != ')')
+		{
+			arg += str.at(length);
+			length++;
+		}
+
+		arg += '=';
+		argument = polandForm(arg, x);
+
+		switch (str.at(i))
+		{
+		case 's':
+			argument = sin(argument);
+			break;
+		case 'c':
+			argument = cos(argument);
+			break;
+		case 't':
+			argument = tan(argument);
+			break;
+		default:
+			break;
+		}
+
+		str.erase(i, length - i + 1);
+		try
+		{
+			arg = to_string(argument);
+		}
+		catch (invalid_argument)
+		{
+			myInterface.getID(12);
+			return;
+		}
+		catch (out_of_range)
+		{
+			myInterface.getID(13);
+			return;
+		}
+		str.insert(i, "(");
+		str.insert(i + 1, arg);
+		str.insert(i + 1 + arg.size(), ")");
+	}
+
+	static bool isOperator(char ch)
+	{
+		switch (ch)
+		{
+		case '+':
+		case '-':
+		case '*':
+		case '/':
+		case '^':
+			return true;
+			break;
+		default:
+			return false;
+			break;
 		}
 	}
 
@@ -118,7 +170,7 @@ private:
 			case '(':
 				if (i > 0)
 				{
-					if (isdigit(str.at(i - 1)) || !isdigit(str.at(i + 1)))
+					if (!isdigit(str.at(i - 1))  && str.at(i - 1) != 'n' && str.at(i - 1) != 's' || isOperator(str.at(i + 1)))
 					{
 						myInterface.getID(14);
 						return false;
@@ -142,7 +194,7 @@ private:
 					return false;
 				}
 
-				if (!isdigit(str.at(i - 1)))
+				if (isOperator(str.at(i - 1)))
 				{
 					myInterface.getID(15);
 					return false;
@@ -169,6 +221,33 @@ private:
 					return false;
 				}
 
+				break;
+			case 's':
+				if (str.at(i + 1) == 'i' && str.at(i + 2) == 'n' && str.at(i + 3) == '(')
+					i += 2;
+				else
+				{
+					myInterface.getID(19);
+					return false;
+				}
+				break;
+			case 'c':
+				if (str.at(i + 1) == 'o' && str.at(i + 2) == 's' && str.at(i + 3) == '(')
+					i += 2;
+				else
+				{
+					myInterface.getID(19);
+					return false;
+				}
+				break;
+			case 't':
+				if (str.at(i + 1) == 'a' && str.at(i + 2) == 'n' && str.at(i + 3) == '(')
+					i += 2;
+				else
+				{
+					myInterface.getID(19);
+					return false;
+				}
 				break;
 			default:
 				myInterface.getID(5);
@@ -198,8 +277,6 @@ private:
 		try
 		{
 			stk1.push(stod(tmp));
-			//if (!isPrimeNumber(stoi(tmp), myInterface))
-			//	return false;
 			tmp = "\0";
 		}
 		catch (invalid_argument)
@@ -216,13 +293,12 @@ private:
 		return true;
 	}
 
-	static double polandForm(string str, int& x)
+	static double polandForm(string str, int x)
 	{
 		stack <double> stk1;
 		stack <char> stk2;
 		string tmp = "\0";
-		string arg = "\0";
-		string xValue = "\0";
+		string xValue = to_string(x);
 		int dynamicBrackets = 0;
 		unsigned int sizeStr = str.size(), sizeStk2;
 		UInterface myInterface;
@@ -247,7 +323,9 @@ private:
 			case '8':
 			case '9':
 			case '0':
+			case ',':
 				tmp += str.at(i);
+				break;
 				break;
 			case '+':
 			case '-':
@@ -261,6 +339,18 @@ private:
 						system("pause");
 						exit(-1);
 					}
+
+				if ((str.at(i) == '-' && i == 0))
+				{
+					tmp += str.at(i);
+					break;
+				}
+					
+				if(str.at(i) == '-' && str.at(i - 1) == '(')
+				{
+					tmp += str.at(i);
+					break;
+				}
 
 				if (stk2.size() - dynamicBrackets == 0)
 					stk2.push(str.at(i));
@@ -303,11 +393,17 @@ private:
 				break;
 			case 'x':
 				str.erase(i, i + 1);
-				xValue = to_string(x);
 				str.insert(i, xValue);
 				sizeStr = str.size();
 				i = i + xValue.size() - 1;
 				tmp += xValue;
+				break;
+			case 's':
+			case 'c':
+			case 't':
+				calculateMathFuncValue(str, i, x, myInterface);
+				sizeStr = str.size();
+				i--;
 				break;
 			default:
 				break;
@@ -317,27 +413,27 @@ private:
 		while (stk1.size() != 1 && !stk2.empty())
 			calculation(stk1, stk2);
 
-		myInterface.getResult(stk1.top());
-		x--;
 		return stk1.top();
 	}
 
 public:
 
-	double recursionSum(string str, double& result, int x)
+	double recursionSum(string str, double& result, int x, UInterface myInterface)
 	{
 		if (x == 0)
 			return 0.0;
 		result += polandForm(str, x);
-		return result + recursionSum(str, result, x);
+		x--;
+		return result + recursionSum(str, result, x, myInterface);
 	}
 
-	double recursionProd(string str, double& result, int x)
+	double recursionProd(string str, double& result, int x, UInterface myInterface)
 	{
 		if (x == 0)
 			return 1.0;
 		result *= polandForm(str, x);
-		return recursionProd(str, result, x);
+		x--;
+		return recursionProd(str, result, x, myInterface);
 	}
 	
 };
