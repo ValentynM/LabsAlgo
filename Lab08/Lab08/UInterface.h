@@ -38,6 +38,9 @@ public:
 		case 9:
 			cout << "Path: ";
 			break;
+		case 10:
+			cout << "Initial vertex input error!" << endl;
+			break;
 		default:
 			break;
 		}

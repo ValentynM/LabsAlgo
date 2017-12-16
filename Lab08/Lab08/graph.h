@@ -14,7 +14,6 @@ private:
 	vector <vector<int>> graph;
 	vector <bool> visited;
 	vector <int> way;
-	int to;
 	
 public:
 
@@ -40,14 +39,14 @@ public:
 		return true;
 	}
 
-	void breadthFirstSearch(int initialVertex, UInterface myInterface)
+	void depthFirstSearch(int initialVertex, UInterface myInterface)
 	{
 		visited[initialVertex] = true;
 		way.resize(way.size() + 1);
 		way[way.size() - 1] = initialVertex;
 		for (int i = 0; i < n; i++)
 			if ((graph[initialVertex][i] != 0) && (!visited[i]))
-				breadthFirstSearch(i, myInterface);
+				depthFirstSearch(i, myInterface);
 	}
 
 	void outputWay(UInterface myInterface)

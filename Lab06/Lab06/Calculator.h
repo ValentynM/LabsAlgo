@@ -170,7 +170,7 @@ private:
 			case '(':
 				if (i > 0)
 				{
-					if (!isdigit(str.at(i - 1))  && str.at(i - 1) != 'n' && str.at(i - 1) != 's' || isOperator(str.at(i + 1)))
+					if (isdigit(str.at(i - 1))  && str.at(i - 1) != 'n' && str.at(i - 1) != 's' || isOperator(str.at(i + 1)))
 					{
 						myInterface.getID(14);
 						return false;
