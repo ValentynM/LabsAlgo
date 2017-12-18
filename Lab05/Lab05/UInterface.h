@@ -28,7 +28,6 @@ public:
 		case 5:
 			cout << "Enter '1' to add node, '2' to print tree, '3' to get tree height," << endl;
 			cout << "'4' to get count of elements on some level, '5' to divide tree by two trees," << endl;
-			cout << "'6' to parse xml;" << endl;
 			break;
 		default:
 			break;

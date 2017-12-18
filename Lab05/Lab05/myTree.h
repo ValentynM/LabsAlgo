@@ -144,11 +144,6 @@ public:
 			}
 		} while (!p1.empty() || p != NULL);
 	}
-
-	void parseXML(myTree& tree)
-	{
-
-	}
 };
 
 template <class T>

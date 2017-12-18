@@ -12,7 +12,7 @@ public:
 		switch (id)
 		{
 		case 1:
-			cout << "Enter '1' to add node, '2' to print tree, '3' to delete tree, '4' to end program" << endl;
+			cout << "Red Black Tree painting program\n" << endl;
 			break;
 		case 2:
 			cout << "Tree height = ";
@@ -22,14 +22,9 @@ public:
 		}
 	}
 
-	void inputCharacter(char& ch)
-	{
-		cin >> ch;
-	}
-
 	bool inputCount(int& n)
 	{
-		cout << "Input count of nodes you want to input:";
+		cout << "Input count of nodes you want to input: ";
 		cin >> n;
 		if (n < 1)
 		{ 
